@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: react-frontend
+    ports:
+      - "3000:3000" # Map port 3000 on localhost to port 3000 in the container (React development server)
+    volumes:
+      - ./frontend:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Ensure proper file watching on certain environments
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: django-backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000" # Map port 8000 on localhost to port 8000 in the container
